@@ -1,53 +1,55 @@
-'use client'
-import { useRef, useState } from "react";
-//import ReCAPTCHA from "react-google-recaptcha";
+'use client';
+import { useState, useRef } from 'react';
+import emailjs from '@emailjs/browser';
+import ReCAPTCHA from 'react-google-recaptcha';
 
-//const SITE_KEY = process.env.NEXT_PUBLIC_SITE_KEY!;
+const SITE_KEY = process.env.NEXT_PUBLIC_SITE_KEY!;
+
+const SERVICE_ID = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID!;
+const TEMPLATE_ID = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID!;
+const PUBLIC_KEY = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY!;
 
 export default function ContactSection() {
-  const [formData, setFormData] = useState({ name: "", email: "", message: "" });
+  const formRef = useRef<HTMLFormElement>(null);
+  const [formData, setFormData] = useState({ from_name: '', reply_to: '', message: '' });
   const [loading, setLoading] = useState(false);
-  //const recaptchaRef = useRef<ReCAPTCHA>(null);
- 
+  const recaptchaRef = useRef<ReCAPTCHA>(null);
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    setFormData(prev => ({
+      ...prev,
+      [e.target.name]: e.target.value,
+    }));
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    
-    //const token = await recaptchaRef.current?.executeAsync();
-    //recaptchaRef.current?.reset();
 
-    //if (!token) {
-    //  alert("reCAPTCHA validation failed.");
-    //  return;
-    //}
+    const { from_name, reply_to, message } = formData;
 
-    const { name, email, message } = formData;
-
-    if (!name || !email || !message) {
-      alert("Please fill out all fields.");
+    if (!from_name || !reply_to || !message) {
+      alert('Please fill out all fields.');
       return;
     }
 
+    const token = await recaptchaRef.current?.executeAsync();
+    recaptchaRef.current?.reset();
+
+    if (!token) {
+       alert('reCAPTCHA validation failed.');
+       return;
+     }
+
     setLoading(true);
+
     try {
-      const response = await fetch('https://fb8a21npal.execute-api.us-east-1.amazonaws.com/dev/email', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ ...formData,  }), //token
-      });  
+      await emailjs.sendForm(SERVICE_ID, TEMPLATE_ID, formRef.current!, PUBLIC_KEY);
 
-      if (!response.ok) throw new Error('Failed to send message');
-
-      alert("Thank you for your message!");
-      setFormData({ name: "", email: "", message: "" });
+      alert('Thank you for your message!');
+      setFormData({ from_name: '', reply_to: '', message: '' });
     } catch (err) {
-      console.error("Error submitting contact form:", err);
-      alert("Something went wrong. Please try again.");
+      console.error('EmailJS error:', err);
+      alert('Something went wrong. Please try again.');
     } finally {
       setLoading(false);
     }
@@ -64,22 +66,22 @@ export default function ContactSection() {
           <p className="mb-6 text-sm sm:text-base text-center text-gray-600 dark:text-gray-300">
             I’d love to connect — whether you want to collaborate, chat about a project, or just say hey, feel free to reach out.
           </p>
-          <form onSubmit={handleSubmit} className="space-y-4">
+          <form ref={formRef} onSubmit={handleSubmit} className="space-y-4">
             <input
               type="text"
-              name="name"
+              name="from_name"
               placeholder="Your Name"
               required
-              value={formData.name}
+              value={formData.from_name}
               onChange={handleChange}
               className="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 text-black dark:text-white"
             />
             <input
               type="email"
-              name="email"
+              name="reply_to"
               placeholder="Your Email"
               required
-              value={formData.email}
+              value={formData.reply_to}
               onChange={handleChange}
               className="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 text-black dark:text-white"
             />
@@ -92,19 +94,19 @@ export default function ContactSection() {
               onChange={handleChange}
               className="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 text-black dark:text-white"
             />
-            {/*
-            <ReCAPTCHA
-            ref={recaptchaRef}
-            sitekey= {SITE_KEY}
-            size="invisible"
-            />
-             */}
+              {
+              <ReCAPTCHA
+                ref={recaptchaRef}
+                sitekey={SITE_KEY}
+                size="invisible"
+              />
+              }
             <button
               type="submit"
               disabled={loading}
               className="bg-indigo-600 hover:bg-blue-700 text-white py-3 px-6 rounded-lg font-medium transition duration-300 w-full disabled:opacity-50"
             >
-              {loading ? "Sending..." : "Send Message"}
+              {loading ? 'Sending...' : 'Send Message'}
             </button>
           </form>
         </div>
