@@ -1,9 +1,15 @@
 // app/projects/page.tsx
 const projects = [
-    {
-      title: 'Munzey – Real-Time Expense Tracker',
+  {
+    title: 'Market Valuation Tracker',
+    description:
+      'A web app for tracking the status of the stock market. Using a AWS Lambda (.NET/C#) backend connected to and API provided by Finnhub, this app looks at live market data for stocks to see how they are trending. Currently this app only focuses on the magnificent 7 stocks daily performance.',
+    link: 'https://market-valuation-tracker.vercel.app/',
+  },  
+  {
+      title: 'Munzey – Expense Tracker',
       description:
-        'A full-stack application built with AWS services such as Lambda, CloudFront, DynamoDB, and Cognito, with a frontend created in React. It helps users visualize and manage personal finances in real-time.',
+        'A full-stack application built with AWS services such as Lambda, CloudFront, DynamoDB, and Cognito, with a frontend created in React. It helps users visualize and manage personal finances.',
       link: 'https://www.myMunzey.com',
     },
     {
