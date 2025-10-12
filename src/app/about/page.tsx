@@ -15,7 +15,7 @@ export default function AboutSection() {
               Currently I'm a software developer working at Nextworld, where I focus on building scalable, user-focused ERP applications. My work blends technical and analytical skills and allows me to use my creative side. I enjoy solving complex problems with clean, maintainable code.
             </p>
             <p>
-              I like to spend time outside of work coding as well. Recently, I built <a href="https://www.myMunzey.com" className="text-blue-500 hover:text-blue-400 transition">Munzey</a>, an expense tracker web app, using various AWS services — such as Lambda, DynamoDB, Cognito, and a React frontend with visualizations. It’s a project that reflects my passion for financial literacy, cloud technologies, and great user experience.
+              I like to spend time outside of work coding as well. Recently, I built <a href="https://www.myMunzey.com" className="text-black hover:text-blue-400 transition">Munzey</a>, an expense tracker web app, using various AWS services — such as Lambda, DynamoDB, Cognito, and a React frontend with visualizations. It’s a project that reflects my passion for financial literacy, cloud technologies, and great user experience.
             </p>
             <p>
               Outside of coding, I have a variety of hobbies — I love running, cycling, and spending time outside. I'm also into sports in general, whether it’s watching a game or playing casually. When I’m home, you’ll often find me in the kitchen trying new recipes or reading a good book.

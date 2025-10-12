@@ -13,7 +13,7 @@ export default function Home() {
           <span className="block">Hendley</span>
         </h1>
         <p className="text-lg sm:text-xl md:text-2xl text-gray-100 dark:text-gray-300 max-w-xl text-center md:text-left">
-          I’m a full-stack developer based in Denver, CO, passionate about building fast, accessible, and user-friendly web applications.
+          I am a full-stack developer based in Denver, CO, passionate about building fast, accessible, and user-friendly web applications.
         </p>
       </section>
  
