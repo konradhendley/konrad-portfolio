@@ -9,7 +9,7 @@ const projects = [
   {
       title: 'Munzey – Expense Tracker',
       description:
-        'A full-stack application built with AWS services such as Lambda, S3, DynamoDB, CloudFront, and Cognito, with a frontend created in React. It helps users visualize and manage personal finances.',
+        'A full-stack application built with AWS services such as Lambda, S3, DynamoDB, CloudFront, and Cognito, with a frontend created with React. It helps users visualize and manage personal finances.',
       link: 'https://www.myMunzey.com',
     },
     {

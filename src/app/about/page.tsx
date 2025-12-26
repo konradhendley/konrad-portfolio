@@ -21,7 +21,7 @@ export default function AboutSection() {
               Outside of coding, I have a variety of hobbies. I love running, cycling, and spending time outside. I'm also into sports in general, whether it’s watching a game or playing casually. When I’m home, I enjoy being in the kitchen trying new recipes or reading a good book.
             </p>
             <p>
-              Thanks for visiting, feel free to explore my projects or reach out. I'm always open to connecting and collaborating.
+              Thank you for visiting, feel free to explore my projects or reach out. I'm always open to connecting and collaborating.
             </p>
           </div>
         </div>
