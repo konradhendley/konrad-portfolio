@@ -4,6 +4,11 @@ on:
   push:
     branches: [main]
 
+
+permissions:
+  id-token: write
+  contents: read
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -17,6 +22,12 @@ jobs:
         with:
           node-version: 20
 
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::471112870963:role/GitHubActionsDeploymentRole
+          aws-region: us-east-1
+
       - name: Install dependencies
         run: npm install
 
@@ -29,9 +40,6 @@ jobs:
           args: --delete
         env:
           AWS_S3_BUCKET: ${{ secrets.S3_BUCKET_NAME }}
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_REGION: ${{ secrets.AWS_REGION }}
           SOURCE_DIR: "./out"
 
       - name: Invalidate CloudFront cache
@@ -39,6 +47,3 @@ jobs:
         env:
           DISTRIBUTION: ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }}
           PATHS: "/*"
-          AWS_REGION: ${{ secrets.AWS_REGION }}
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
