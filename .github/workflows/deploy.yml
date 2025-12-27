@@ -35,12 +35,8 @@ jobs:
         run: npm run build && npm run export
 
       - name: Upload to S3
-        uses: jakejarvis/s3-sync-action@v0.5.1
-        with:
-          args: --delete
-        env:
-          AWS_S3_BUCKET: ${{ secrets.S3_BUCKET_NAME }}
-          SOURCE_DIR: "./out"
+        run: |
+          aws s3 sync out/ s3://${{ secrets.S3_BUCKET_NAME }} --delete
 
       - name: Invalidate CloudFront cache
         uses: chetan/invalidate-cloudfront-action@v2
